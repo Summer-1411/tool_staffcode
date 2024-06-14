@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Fetch API Example</h1>
+    <button id="fetchButton">Fetch Data</button>
+    <script>
+        const callAPI = () => {
+            //Done 19: Công ty Điện lực Thạch Thất;
+            fetch('http://10.9.165.18:3020/users?query=&limit=1000&ascending=1&page=1&byColumn=0&orgId=301&departmentId=&role_id=2864&status=')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok ' + response.statusText);
+                    }
+                    return response.json(); // Parse the JSON from the response
+                })
+                .then(data => {
+                    // 
+
+                    // Handle the data from the API
+                    console.log('chekc data', data);
+                    const result = [];
+                    const arrayReusult = data.data.forEach(element => {
+                        if(element.staffCode){
+                            result.push("\'" + element.staffCode +"\'")
+                        }
+                    });
+                    console.log(result.join(','));
+                })
+                .catch(error => {
+                    console.log('eror', error);
+                    // Handle any errors that occurred during the fetch
+                    // document.getElementById('responseData').textContent = 'Fetch error: ' + error.message;
+                });
+        }
+        document.getElementById('fetchButton').addEventListener('click', callAPI)
+        
+
+    </script>
+</body>
+
+</html>
